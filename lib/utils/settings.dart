@@ -30,6 +30,7 @@ class Settings {
     'SECRET_KEY',
     defaultValue: 'u98y4tuwbef8o927ty2pi8g7r83fb2',
   );
+  static const int tokenExpirationInHours = 3;
 
   // You can add a helper to check the environment
   static bool get isProduction => appEnvironment == 'production';

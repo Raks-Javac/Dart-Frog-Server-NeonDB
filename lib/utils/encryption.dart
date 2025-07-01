@@ -14,7 +14,10 @@ class Encryption {
       },
     );
 
-    return jwt.sign(SecretKey(Settings.authJWTEncodingSecretKey));
+    return jwt.sign(
+      SecretKey(Settings.authJWTEncodingSecretKey),
+      expiresIn: const Duration(hours: Settings.tokenExpirationInHours),
+    );
   }
 
   static Map<dynamic, dynamic> verifyToken(String token) {
