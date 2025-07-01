@@ -26,6 +26,10 @@ class Settings {
     'APP_ENV',
     defaultValue: 'development',
   ); // e.g., 'development', 'production', 'test'
+  static const String authJWTEncodingSecretKey = String.fromEnvironment(
+    'SECRET_KEY',
+    defaultValue: 'u98y4tuwbef8o927ty2pi8g7r83fb2',
+  );
 
   // You can add a helper to check the environment
   static bool get isProduction => appEnvironment == 'production';

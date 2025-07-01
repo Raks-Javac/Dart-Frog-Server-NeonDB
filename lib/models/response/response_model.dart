@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 class ApiResponseModel {
   ApiResponseModel({this.isSuccessful, this.data, this.status, this.message});
 
