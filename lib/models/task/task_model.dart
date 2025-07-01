@@ -1,0 +1,41 @@
+// ignore_for_file: public_member_api_docs
+
+import 'package:uuid/uuid.dart';
+
+class Task {
+  Task({
+    String? uid, // Make uid optional in constructor for new tasks
+    this.title,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+  }) : uid = uid ?? const Uuid().v4(); // Generate a new UUID v4 if not provided
+
+  Task.fromJson(Map<String, dynamic> json) {
+    // Deserialize uid from JSON
+    uid = json['uid'] as String;
+    title = json['title'] as String;
+    description = json['description'] as String;
+    createdAt = json['created_at'] as String;
+    updatedAt = json['updated_at'] as String;
+  }
+
+  // Add the uid field
+  String? uid; // No longer nullable if it's always generated or read
+
+  String? title;
+  String? description;
+  String? createdAt;
+  String? updatedAt;
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    // Serialize uid to JSON
+    data['uid'] = uid;
+    data['title'] = title;
+    data['description'] = description;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
+  }
+}

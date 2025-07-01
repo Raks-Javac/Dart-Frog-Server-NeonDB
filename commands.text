@@ -1,0 +1,17 @@
+// to add it on running your dart frog 
+
+dart_frog dev \
+  -D DB_HOST=localhost \
+  -D DB_DATABASE=my_app_db_dev \
+  -D DB_USERNAME=dev_user \
+  -D DB_PASSWORD=my_secure_dev_pass \
+  -D APP_ENV=development
+
+// to build
+
+dart_frog build \
+  -D DB_HOST=your_production_db_host.example.com \
+  -D DB_DATABASE=my_dartfrog_prod_db \
+  -D DB_USERNAME=prod_user \
+  -D DB_PASSWORD=SUPER_SECURE_PROD_PASSWORD_HERE \
+  -D APP_ENV=production
