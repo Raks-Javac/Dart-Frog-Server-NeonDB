@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:dart_frog_jwt_neon/models/response/response_model.dart';
 import 'package:dart_frog_jwt_neon/models/user/user_model.dart';
 import 'package:dart_frog_jwt_neon/repositories/user/user_repository.dart';
-import 'package:dart_frog_jwt_neon/utils/encryption.dart';
+import 'package:dart_frog_jwt_neon/utils/settings.dart';
 import 'package:dart_frog_jwt_neon/utils/utils.dart';
 
 Future<Response> onRequest(RequestContext context) {
@@ -44,22 +43,32 @@ Future<Response> _registerUser(RequestContext context) async {
     username: username.toString(),
     password: password.toString(),
   );
+  // password: Encryption.encryptPassword(password.toString()),
 
   if (user == null) {
+    final userN = User(
+      username: username.toString(),
+      password: '',
+      createdAt: DateTime.now().toIso8601String(),
+      updatedAt: DateTime.now().toIso8601String(),
+    );
     return Response.json(
-      body: ApiResponseModel(
-        data: {
-          'token': authenticator.generateToken(
-            User(
-              username: username.toString(),
-              password: Encryption.encryptPassword(password.toString()),
-              createdAt: DateTime.now().toIso8601String(),
-              updatedAt: DateTime.now().toIso8601String(),
+      body: succcessResponse(
+        'User logged in successfully',
+        {
+          'user': {
+            'username': userN.username,
+            'tokenExp': Settings.tokenExpirationInHours,
+            'token': authenticator.generateToken(
+              User(
+                username: username.toString(),
+                password: '',
+                createdAt: '',
+                updatedAt: '',
+              ),
             ),
-          ),
+          },
         },
-        isSuccessful: true,
-        message: 'User logged in successfully',
       ),
     );
   } else {
