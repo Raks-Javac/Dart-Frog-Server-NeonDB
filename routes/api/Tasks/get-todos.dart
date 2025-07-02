@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_jwt_neon/models/response/response_model.dart';
 import 'package:dart_frog_jwt_neon/repositories/user/user_repository.dart';
+import 'package:dart_frog_jwt_neon/utils/utils.dart';
 
 Future<Response> onRequest(RequestContext context) {
   return switch (context.request.method) {
@@ -10,11 +11,7 @@ Future<Response> onRequest(RequestContext context) {
     _ => Future.value(
         Response.json(
           statusCode: HttpStatus.methodNotAllowed,
-          body: ApiResponseModel(
-            isSuccessful: false,
-            message: 'Request not allowed',
-            status: 'failed',
-          ),
+          body: failedResponse('Request not allowed'),
         ),
       ),
   };
@@ -42,10 +39,10 @@ Future<Response> _getUserTodo(RequestContext context) async {
     return Response.json(
       body: ApiResponseModel(
         data: {
-          'token': authenticator.generateToken(user),
+          'token': null,
         },
         isSuccessful: true,
-        message: 'User logged in successfully',
+        message: 'Todos ready',
       ),
     );
   }

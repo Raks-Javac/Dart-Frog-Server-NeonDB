@@ -6,7 +6,7 @@ import 'package:dart_frog_jwt_neon/models/user/user_model.dart';
 import 'package:dart_frog_jwt_neon/repositories/user/user_repository.dart';
 
 Handler middleware(Handler handler) {
-  return handler.use(
+  return handler.use(requestLogger()).use(
     bearerAuthentication<User>(
       authenticator: (context, token) async {
         final authenticator = context.read<UserRepository>();
