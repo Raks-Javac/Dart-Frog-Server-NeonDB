@@ -9,16 +9,16 @@ class Settings {
       String.fromEnvironment('DB_HOST', defaultValue: 'localhost');
 
   static const String dbDatabase =
-      String.fromEnvironment('DB_DATABASE', defaultValue: 'postgres');
+      String.fromEnvironment('DB_DATABASE', defaultValue: 'dome');
 
   static const String dbUsername = String.fromEnvironment(
     'DB_USERNAME',
-    defaultValue: 'user',
+    defaultValue: 'postgres',
   ); // IMPORTANT: Change default for production!
 
   static const String dbPassword = String.fromEnvironment(
     'DB_PASSWORD',
-    defaultValue: 'pass',
+    defaultValue: 'rjcs_javac',
   ); // IMPORTANT: NEVER use default 'pass' in production!
 
   // Application Environment Setting

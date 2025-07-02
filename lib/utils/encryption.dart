@@ -53,7 +53,7 @@ class Encryption {
     }
   }
 
-  bool checkPassword(String pw, String hashedPwFromDb) {
+  static bool checkPassword(String pw, String hashedPwFromDb) {
     return BCrypt.checkpw(pw, hashedPwFromDb);
   }
 }

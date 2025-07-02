@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, always_declare_return_types
 
+import 'package:dart_frog_jwt_neon/database/db.dart';
 import 'package:dart_frog_jwt_neon/models/user/user_model.dart';
 import 'package:dart_frog_jwt_neon/utils/encryption.dart';
 import 'package:dart_frog_jwt_neon/utils/settings.dart';
@@ -14,7 +15,6 @@ class UserRepository {
       updatedAt: DateTime.now().toIso8601String(),
     ),
   };
-
 
   User? verifyToken(String token) {
     try {
@@ -44,10 +44,20 @@ class UserRepository {
     }
   }
 
-  User? findByUsernameAndPassword({
+  Future<User?> findByUsernameAndPassword({
     required String username,
     required String password,
-  }) {
-    return _users[username];
+  }) async {
+    final dbLookUp = await Database.findUserByUsername(username);
+    if (dbLookUp != null) {
+      return User.fromJson(dbLookUp);
+    } else {
+      return null;
+    }
+  }
+
+  Future<User?> createUser(User user) async {
+    final dbLookUp = await Database.createUser(user.toJson());
+    return User.fromJson(dbLookUp);
   }
 }
