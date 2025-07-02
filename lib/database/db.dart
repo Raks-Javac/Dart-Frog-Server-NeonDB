@@ -19,7 +19,7 @@ class Database {
             password: Settings.dbPassword,
           ),
           settings: const ConnectionSettings(
-            sslMode: SslMode.disable,
+            sslMode: Settings.dbSslMode, // <--- Crucial for Neon
           ),
         );
         AppLogger.info('Database connection established.');

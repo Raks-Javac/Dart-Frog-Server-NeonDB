@@ -1,35 +1,31 @@
 // ignore_for_file: public_member_api_docs
 
+import 'dart:io';
+
+import 'package:postgres/postgres.dart';
+
 class Settings {
   // Database Connection Settings
   // These values will be read from environment variables at compile time.
   // The second argument is the default/fallback value if the environment variable is not set.
-
-  static const String dbHost =
-      String.fromEnvironment('DB_HOST', defaultValue: 'localhost');
-
-  static const String dbDatabase =
-      String.fromEnvironment('DB_DATABASE', defaultValue: 'dome');
-
-  static const String dbUsername = String.fromEnvironment(
-    'DB_USERNAME',
-    defaultValue: 'postgres',
-  ); // IMPORTANT: Change default for production!
-
-  static const String dbPassword = String.fromEnvironment(
-    'DB_PASSWORD',
-    defaultValue: 'rjcs_javac',
-  ); // IMPORTANT: NEVER use default 'pass' in production!
+  // Database Connection Settings
+  // Using Platform.environment for runtime access to environment variables
+  static String dbHost = Platform.environment['DB_HOST'] ?? '';
+  static String dbDatabase = Platform.environment['DB_DATABASE'] ?? '';
+  static String dbUsername = Platform.environment['DB_USERNAME'] ?? '';
+  static String dbPassword = Platform.environment['DB_PASSWORD'] ?? '';
+  static const int dbPort =
+      5432; // Standard PostgreSQL port, keep as const unless variable
 
   // Application Environment Setting
-  static const String appEnvironment = String.fromEnvironment(
-    'APP_ENV',
-    defaultValue: 'development',
-  ); // e.g., 'development', 'production', 'test'
-  static const String authJWTEncodingSecretKey = String.fromEnvironment(
-    'SECRET_KEY',
-    defaultValue: 'u98y4tuwbef8o927ty2pi8g7r83fb2',
-  );
+  static String appEnvironment =
+      Platform.environment['APP_ENV'] ?? 'development';
+  static String authJWTEncodingSecretKey =
+      Platform.environment['SECRET_KEY'] ?? '';
+
+  // SSL Mode for PostgreSQL - This is a Dart enum, not directly from environment string by default
+  // Keep as const, or add logic to parse from a string env var if you need it configurable.
+  static const SslMode dbSslMode = SslMode.require;
   static const int tokenExpirationInHours = 3;
 
   // You can add a helper to check the environment
