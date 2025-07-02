@@ -37,8 +37,8 @@ class Task {
     data['uid'] = uid;
     data['title'] = title;
     data['description'] = description;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    data['created_at'] = createdAt.toString();
+    data['updated_at'] = updatedAt.toString();
     if (id != null) {
       data['id'] = id; // Include ID if it exists (for existing users)
     }

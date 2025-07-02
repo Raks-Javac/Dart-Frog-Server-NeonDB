@@ -13,6 +13,7 @@ class Encryption {
     final jwt = JWT(
       {
         'username': user.username,
+        'uid': user.uid,
       },
     );
 

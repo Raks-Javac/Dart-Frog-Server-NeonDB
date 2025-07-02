@@ -41,9 +41,8 @@ Future<Response> _loginUser(RequestContext context) async {
 
   final authenticator = context.read<UserRepository>();
 
-  final user = await authenticator.findByUsernameAndPassword(
+  final user = await authenticator.findByUsername(
     username: username.toString(),
-    password: password.toString(),
   );
 
   if (user == null) {

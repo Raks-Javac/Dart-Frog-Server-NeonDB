@@ -16,7 +16,7 @@ class UserRepository {
     ),
   };
 
-  User? verifyToken(String token) {
+  Future<User?> verifyToken(String token) async {
     try {
       final payload = JWT.verify(
         token,
@@ -27,8 +27,11 @@ class UserRepository {
 
       final username = payloadData['username'] as String;
 
-      // check db and return user model for this
-      return _users[username];
+      final user = await findByUsername(
+        username: username,
+      );
+
+      return user;
     } catch (e) {
       return null;
     }
@@ -44,9 +47,8 @@ class UserRepository {
     }
   }
 
-  Future<User?> findByUsernameAndPassword({
+  Future<User?> findByUsername({
     required String username,
-    required String password,
   }) async {
     final dbLookUp = await Database.findUserByUsername(username);
     if (dbLookUp != null) {
