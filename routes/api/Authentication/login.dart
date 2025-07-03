@@ -21,6 +21,12 @@ Future<Response> onRequest(RequestContext context) {
 }
 
 Future<Response> _loginUser(RequestContext context) async {
+  if (await context.request.body() == "") {
+    return Response.json(
+      statusCode: HttpStatus.badRequest,
+      body: failedResponse('Invalid Request'),
+    );
+  }
   final body = await context.request.json() as Map<String, dynamic>;
   final username = body['username'];
   final password = body['password'];

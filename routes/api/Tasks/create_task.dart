@@ -22,6 +22,12 @@ Future<Response> onRequest(RequestContext context) {
 }
 
 Future<Response> _createUserTask(RequestContext context) async {
+  if (await context.request.body() == "") {
+    return Response.json(
+      statusCode: HttpStatus.badRequest,
+      body: failedResponse('Invalid Request'),
+    );
+  }
   try {
     final user = context.read<User>();
     final taskRepository = context.read<TaskRepository>();

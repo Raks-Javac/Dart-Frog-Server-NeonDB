@@ -4,9 +4,10 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_jwt_neon/models/user/user_model.dart';
 import 'package:dart_frog_jwt_neon/repositories/user/user_repository.dart';
 import 'package:dart_frog_jwt_neon/utils/encryption.dart';
+import 'package:dart_frog_jwt_neon/utils/logger.dart';
 import 'package:dart_frog_jwt_neon/utils/utils.dart';
 
-Future<Response> onRequest(RequestContext context) {
+Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
     HttpMethod.post => _registerUser(context),
     _ => Future.value(
@@ -19,7 +20,21 @@ Future<Response> onRequest(RequestContext context) {
 }
 
 Future<Response> _registerUser(RequestContext context) async {
+  if (await context.request.body() == "") {
+    return Response.json(
+      statusCode: HttpStatus.badRequest,
+      body: failedResponse('Invalid Request'),
+    );
+  }
   final body = await context.request.json() as Map<String, dynamic>;
+  AppLogger.debug(body);
+  if (body.isEmpty) {
+    return Response.json(
+      statusCode: HttpStatus.badRequest,
+      body: failedResponse('Pass a valid username'),
+    );
+  }
+
   final username = body['username'];
   final password = body['password'];
 
