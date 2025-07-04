@@ -8,7 +8,7 @@ import 'package:dart_frog_jwt_neon/utils/utils.dart';
 
 Future<Response> onRequest(RequestContext context) {
   return switch (context.request.method) {
-    HttpMethod.post => _getAllUserTask(context),
+    HttpMethod.get => _getAllUserTask(context),
     _ => Future.value(
         Response.json(
           statusCode: HttpStatus.methodNotAllowed,
@@ -19,12 +19,6 @@ Future<Response> onRequest(RequestContext context) {
 }
 
 Future<Response> _getAllUserTask(RequestContext context) async {
-  if (await context.request.body() == "") {
-    return Response.json(
-      statusCode: HttpStatus.badRequest,
-      body: failedResponse('Invalid Request'),
-    );
-  }
   try {
     final user = context.read<User>();
     final taskRepository = context.read<TaskRepository>();
