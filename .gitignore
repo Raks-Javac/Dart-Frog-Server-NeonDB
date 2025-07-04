@@ -16,4 +16,3 @@ build/
 coverage/
 *.env
 
-*app_cli.sh
